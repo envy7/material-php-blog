@@ -63,7 +63,7 @@ if(login()){
 		</div>
 	</center>-->
 	<div class="row" style="margin: 20 auto;width: 70%">
-	    <form class="col s12" action = "addblog.php" method = "POST" enctype = "utf-8">
+	    <form class="col s12" action = "addblog.php" method = "POST" enctype = "multipart/form-data">
 	      <div class="row">
 	        <div class="input-field col s12">
 	          <input id="heading" type="text" class="validate" name = "blog_heading">
@@ -85,7 +85,8 @@ if(login()){
 	      <div class="file-field input-field">
 		      <div class="btn">
 		        <span>File</span>
-		        <input type="file">
+		        <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+		        <input id= "file" name = "file" type="file">
 		      </div>
 		      <div class="file-path-wrapper">
 		        <input class="file-path validate" type="text">
@@ -115,10 +116,21 @@ if(login()){
 
 	function getTags($string){
 	  preg_match_all ("/(#(.*)\s)|(#(.*)$)/U", $string, $tagarray);
-	  return $tagarray;
+	  if(!empty($tagarray)){
+		$string = $tagarray[0][0];
+		$i=1;
+		while(!empty($tagarray[0][$i])){
+			$string.=",";
+			$string.=$tagarray[0][$i];
+			$i++;
+		}
+		return $string;
+	}
+	else
+		return NULL;
 	}
 	
-	if(isset($_POST["add_blog"])){
+	if(isset($_POST["add_blog"]) && $_FILES['file']['size'] > 0){
 		
 
 		if(empty($_POST["blog_heading"]))
@@ -127,26 +139,45 @@ if(login()){
 			echo "<script>alert('Please enter description');</script>";
 		else if(empty($_POST["blog_category"]))
 			echo "<script>alert('Please enter category');</script>";
-		else{
-			$h = $_POST['blog_heading'];
-			$d = $_POST["blog_des"];
-			$c = $_POST["blog_category"];	
-			
-			$tags = getTags($c);
-			//echo "$tags[0]";
-
-			$sql = "INSERT INTO `blogs`(`blogger_id`,`title`,`detail`,`category`) VALUES ('$id','$h','$d','$tags')";
-			if(mysqli_query($db,$sql)){
-				//echo "<script>alert('Your blog has been added');</script>";
-				header('Refresh: 1;URL= profile.php');
-			}
-			else
-			{
-				echo "<script>alert('Something went wrong.Please try again');</script>";
-
-			}
-			
+		else if(!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+			echo "<script>alert('Please upload image.')</script>";	
 		}
+		else{
+			$allowed = array('gif','png' ,'jpg');
+			$filename = $_FILES['file']['name'];
+			$ext = pathinfo($filename, PATHINFO_EXTENSION);
+			if(!in_array($ext,$allowed)) 
+				echo "<script>alert('".$ext." file format is not allowed. Upload jpg, png or gif format only.')</script>";
+			else{
+				$file=addslashes(file_get_contents($_FILES["file"]["tmp_name"]));
+				$h = $_POST['blog_heading'];
+				$d = $_POST["blog_des"];
+				$c = $_POST["blog_category"];	
+				
+				$tags = getTags($c);
+				//echo "$tags[0]";
+
+				$sql = "INSERT INTO `blogs`(`blogger_id`,`title`,`detail`,`category`, `status`, `editedBy`) VALUES ('$id','$h','$d','$tags', 'W', 'U')";
+				
+				mysqli_query($db,$sql);
+				$sql1 = "SELECT `blog_id` from `blogs` ORDER BY `blog_id` DESC";
+				$r=mysqli_query($db,$sql1);
+				$row=mysqli_fetch_array($r,MYSQLI_NUM);
+				$last_id=$row[0];
+				$sql2 = "INSERT INTO `blog_detail`(`blog_id`,`image`) VALUES('$last_id','$file')";
+				if(mysqli_query($db,$sql2)){
+					header("location:profile.php");
+				}
+				else
+				{
+					echo"<script>alert('There was a problem in posting the blog')</script>";
+
+				}	
+			}		
+		}
+	}
+	else{
+		echo "<script>alert('File size is too large');</script>";
 	}
 
 

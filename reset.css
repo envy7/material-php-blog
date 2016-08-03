@@ -46,3 +46,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+
+.category {
+	display: inline-block;
+	padding: 10px;
+	color: #fff !important;
+	background-color: #f50057 !important;
+	margin-right: 10px !important;
+}
