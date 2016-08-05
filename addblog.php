@@ -41,27 +41,6 @@ if(login()){
 	    </div>
 	  </nav>
 	</div>
-	<!--<center>
-		<div >
-			<form action = "addblog.php" method = "POST" enctype = "utf-8"> 
-				<p class="fieldset">
-					<input class="image-replace cd-username" type = "text" name = "blog_heading" placeholder="Heading" maxlength = 30 required>
-				</p>
-
-				<p class="fieldset">
-					<input class="image-replace cd-username" type = "text" name = "blog_category" placeholder="category" maxlength = 30 required>
-				</p>
-
-				<p class="fieldset">
-					<input class="image-replace cd-username" type = "text" name = "blog_des" placeholder="Description" maxlength = 30 required>
-				</p>
-				
-				<p class="fieldset">
-					<input class="full-width has-padding" type="submit" value="Add Blog" name="add_blog">
-				</p>
-			</form>
-		</div>
-	</center>-->
 	<div class="row" style="margin: 20 auto;width: 70%">
 	    <form class="col s12" action = "addblog.php" method = "POST" enctype = "multipart/form-data">
 	      <div class="row">
@@ -166,7 +145,7 @@ if(login()){
 				$last_id=$row[0];
 				$sql2 = "INSERT INTO `blog_detail`(`blog_id`,`image`) VALUES('$last_id','$file')";
 				if(mysqli_query($db,$sql2)){
-					header("location:profile.php");
+					header("location:home.php");
 				}
 				else
 				{
@@ -176,9 +155,7 @@ if(login()){
 			}		
 		}
 	}
-	else{
-		echo "<script>alert('File size is too large');</script>";
-	}
+	
 
 
 ?>	

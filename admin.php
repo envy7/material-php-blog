@@ -1,6 +1,7 @@
-<?php
-$priviledge = "user";
+<?php 
 
+
+$priviledge = "admin";
 require 'profile.php';
 
 display_blogs($priviledge);

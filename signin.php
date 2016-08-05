@@ -74,7 +74,7 @@ if (isset($_POST['login'])){
 				if($_SESSION["username"]=="admin")
 					header("location:admin.php");
 				else {
-					header("location:profile.php");
+					header("location:home.php");
 				}
 			}
 
