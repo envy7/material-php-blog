@@ -1,6 +1,6 @@
 <?php 
 require 'connect.php';
-require 'session.php';
+
 $id = $_SESSION["id"];
 	if($priviledge == "admin"){
 		if($tmp=="A"){

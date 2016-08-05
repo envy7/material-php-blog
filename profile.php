@@ -18,14 +18,14 @@
 	      <a href="#" class="brand-logo">Blog</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li><a href="?get=W">Home</a></li>
+	        <li><a href="index.php">Home</a></li>
 	        <li class="active"><a href="sass.html">Your Blogs</a></li>
-	        <li><a href="badges.html">Profile</a></li>
+	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
 	        <li><a href="sass.html">Home</a></li>
-	        <li><a href="badges.html">Profile</a></li>
+	        <li><a href="#modal1">Profile</a></li>
 	        <li class="active"><a href="sass.html">Your Blogs</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
 	      </ul>
@@ -35,8 +35,12 @@
 
 	
 	<?php 	
+
 		require 'connect.php';
-		// require 'session.php';
+
+		// retrieve user info
+		
+
 
 		if(isset($_GET['chd']) && isset($_GET['fun'])){
 			$var = $_GET['chd'];
@@ -98,6 +102,11 @@
 			$tmp ="All";
 
 		require 'blog_status.php';
+
+		$userdetailsql = "SELECT * FROM `userdetails` WHERE `Id` = '$id'";
+		$userinforesult = mysqli_query($db,$userdetailsql);
+		$userinfo = mysqli_fetch_array($userinforesult,MYSQLI_ASSOC);
+
 		$func = "active";
 
 		echo "<div class='row'>	
@@ -115,12 +124,12 @@
 
 	    echo " id='approved' href='?get=A'>Approved</a></li>";
 	    echo	        "<li class='tab col s3'><a";
-if($tmp == "W"){
+		if($tmp == "W"){
 	    	echo " class = 'active'";
 	    }
 	    echo" id='waiting' href='?get=W'>Waiting</a></li>";
 	    echo	        "<li class='tab col s3'><a";
-if($tmp == "R"){
+		if($tmp == "R"){
 	    	echo " class = 'active'";
 	    }
 	    echo" id='rejected' href='?get=R'>Rejected</a></li>";
@@ -152,32 +161,58 @@ if($tmp == "R"){
 				if($priviledge == "admin" && $_SESSION['username']=="admin"){
 					if($status == "A"){
 						$var2 = $GLOBALS['tmp'];
-						echo "<div class='actions'>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=R'>Reject</a>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D'>Delete</a>";
-						echo "</div>";
+						echo "<div class='fixed-action-btn horizontal fab-action'>
+						    <a class='btn-floating btn-large indigo'>
+						      <i class='large material-icons'>brush</i>
+						    </a>
+						    <ul>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=R' class='btn-floating red'><i class='material-icons'>clear</i></a></li>
+						      <li><a href = 'addblog.php?sender=A&edit=Y&blogid=".$row['blog_id']."' class='btn-floating blue'><i class='material-icons'>mode_edit</i></a></li>
+						    </ul>
+						</div>";
 					}
 					elseif($status == "W"){
 						$var2 = $GLOBALS['tmp'];
-						echo "<div class='actions'>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=A'>Accept</a>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D'>Delete</a>";
-						echo "</div>";
+						echo "<div class='fixed-action-btn horizontal fab-action'>
+						    <a class='btn-floating btn-large indigo'>
+						      <i class='large material-icons'>brush</i>
+						    </a>
+						    <ul>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=A' class='btn-floating green'><i class='material-icons'>check</i></a></li>
+						      <li><a href = 'addblog.php?sender=A&edit=Y&blogid=".$row['blog_id']."' class='btn-floating blue'><i class='material-icons'>mode_edit</i></a></li>
+						    </ul>
+						</div>";
 					}
 					elseif ($status == "R") {
 						$var2 = $GLOBALS['tmp'];
-						echo "<div class='actions'>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=A'>Accept</a>";
-						echo "<a class= 'z-depth-2' href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D'>Delete</a>";
-						echo "</div>";
+						echo "<div class='fixed-action-btn horizontal fab-action'>
+						    <a class='btn-floating btn-large indigo'>
+						      <i class='large material-icons'>brush</i>
+						    </a>
+						    <ul>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=A' class='btn-floating green'><i class='material-icons'>check</i></a></li>
+						      <li><a href = 'addblog.php?sender=A&edit=Y&blogid=".$row['blog_id']."' class='btn-floating blue'><i class='material-icons'>mode_edit</i></a></li>
+						    </ul>
+						</div>";
 					}
 				}
-				elseif($priviledge == "user"){
+				elseif($priviledge == $_SESSION['username']){
 					$var2 = $GLOBALS['tmp'];
-					echo "<div class='actions'>";
-					echo "<a class= 'z-depth-2' href = 'edit.php?id=".$row['blog_id']."&call=user'>Reject</a>";
-					echo "</div>";	
+					echo "<div class='fixed-action-btn horizontal fab-action'>
+						    <a class='btn-floating btn-large indigo'>
+						      <i class='large material-icons'>brush</i>
+						    </a>
+						    <ul>
+						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
+						      <li><a href = 'addblog.php?sender=U&edit=Y&blogid=".$row['blog_id']."' class='btn-floating blue'><i class='material-icons'>mode_edit</i></a></li>
+						    </ul>
+						</div>";
 				}    
+
+
 				echo    "<img class='activator' src='get_image.php?id=".$blgid."'>";
 
 				echo     "</div>
@@ -197,9 +232,23 @@ if($tmp == "R"){
 				  </div>" 	;   
 			}
 		}
+
+		echo "<div id='modal1' class='modal'>
+			    <div class='modal-content'>
+			      <h4 class='userinfo'>".$userinfo['userName']."</h4>
+			      <p class='userinfo'>".$userinfo['fname']." ".$userinfo['lname']."</p>
+			      <p class='userinfo'>".$userinfo['email']."</p>
+			      <p class='userinfo'>".$userinfo['contact']."</p>
+			    </div>
+			    <div class='modal-footer'>
+			      <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>
+			    </div>
+			  </div>"
 		
 	
 	?>	
+
+	
 
 	<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
 	    <a class="btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4">
@@ -247,6 +296,7 @@ if($tmp == "R"){
       			window.location.href = "?get=R";
       		}, 400);
       	})
+      	$('.modal-trigger').leanModal();
       	
       </script>
 </body>

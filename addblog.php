@@ -5,6 +5,19 @@ if(login()){
 	
 	$id = $_SESSION["id"];
 }
+if(isset($_GET['edit'])){
+	$tmp = $_GET['edit'];
+	if($tmp == "Y"){
+		$bid = $_GET['blogid'];
+		//echo $bid;
+		$sql = "SELECT `blog_id`,`title`,`detail`,`category` FROM `blogs` WHERE `blog_id`= '$bid'";
+		$result1 = mysqli_query($db,$sql);
+		$num_query = mysqli_num_rows($result1);
+		//echo $num_query;
+		$row=mysqli_fetch_array($result1);
+	}
+}
+
 ?>
 
 <html>
@@ -42,22 +55,30 @@ if(login()){
 	  </nav>
 	</div>
 	<div class="row" style="margin: 20 auto;width: 70%">
-	    <form class="col s12" action = "addblog.php" method = "POST" enctype = "multipart/form-data">
+	    <form class="col s12" action = <?php  
+		if(isset($_GET['edit'])){
+			$tmp = $_GET['edit'];
+			if($tmp == "Y"){
+				echo 'addblog.php?sender='.$_GET['sender'].'&edit=Y&blogid='.$_GET['blogid'];
+			}
+		}
+		else echo "addblog.php";
+			?> method = "POST" enctype = "multipart/form-data">
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <input id="heading" type="text" class="validate" name = "blog_heading">
+	          <input id="heading" type="text" class="validate" name = "blog_heading" value = "<?php if (isset($_GET['edit']))echo $row[1];?>">
 	          <label for="heading">Title</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <input id="category" type="text" class="validate" name = "blog_category" placeholder="Add categories seperated with hashtags">
+	          <input id="category" type="text" class="validate" name = "blog_category" placeholder="Add categories seperated with hashtags" value = "<?php if (isset($_GET['edit']))echo $row[3];?>">
 	          <label for="category">Categories</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <textarea id="description" type="text" class="validate materialize-textarea" name = "blog_des" ></textarea>
+	          <textarea id="description" type="text" class="validate materialize-textarea" name = "blog_des" ><?php if (isset($_GET['edit']))echo $row[2];?> </textarea>
 	          <label for="description">Details</label>
 	        </div>
 	      </div>
@@ -136,22 +157,45 @@ if(login()){
 				$tags = getTags($c);
 				//echo "$tags[0]";
 
-				$sql = "INSERT INTO `blogs`(`blogger_id`,`title`,`detail`,`category`, `status`, `editedBy`) VALUES ('$id','$h','$d','$tags', 'W', 'U')";
-				
-				mysqli_query($db,$sql);
-				$sql1 = "SELECT `blog_id` from `blogs` ORDER BY `blog_id` DESC";
-				$r=mysqli_query($db,$sql1);
-				$row=mysqli_fetch_array($r,MYSQLI_NUM);
-				$last_id=$row[0];
-				$sql2 = "INSERT INTO `blog_detail`(`blog_id`,`image`) VALUES('$last_id','$file')";
-				if(mysqli_query($db,$sql2)){
-					header("location:home.php");
+
+				if($tmp == "Y"){
+					if($_SESSION["username"]=="admin"){
+				$sql = "UPDATE `blogs` SET `title`='$h', `detail`='$d', `category`='$tags', `status`='A', `editedBy`='$sender' WHERE `blog_id` = '$bid'";
 				}
 				else
-				{
-					echo"<script>alert('There was a problem in posting the blog')</script>";
+					{
+						$sql = "UPDATE `blogs` SET `title`='$h', `detail`='$d', `category`='$tags', `status`='W', `editedBy`='$sender' WHERE `blog_id` = '$bid'";
+					}
+				$sql1 = "UPDATE `blog_detail` SET `image`='$file' WHERE `blog_id` = '$bid'";
+				
+				if(mysqli_query($db,$sql1) && mysqli_query($db,$sql)){
+						echo"<script>alert('Blog Updated Successfully')</script>";
+						header('location:home.php');			
+					}
+					else
+					{
+						echo"<script>alert('There was a problem in updating the blog')</script>";
+					}
+				}
+				else{
+					$sql = "INSERT INTO `blogs`(`blogger_id`,`title`,`detail`,`category`, `status`, `editedBy`) VALUES ('$id','$h','$d','$tags', 'W', 'U')";
+				
+					mysqli_query($db,$sql);
+					$sql1 = "SELECT `blog_id` from `blogs` ORDER BY `blog_id` DESC";
+					$r=mysqli_query($db,$sql1);
+					$row=mysqli_fetch_array($r,MYSQLI_NUM);
+					$last_id=$row[0];
+					$sql2 = "INSERT INTO `blog_detail`(`blog_id`,`image`) VALUES('$last_id','$file')";
+					if(mysqli_query($db,$sql2)){
+						header("location:home.php");
+					}
+					else
+					{
+						echo"<script>alert('There was a problem in posting the blog')</script>";
 
-				}	
+					}	
+				}
+				
 			}		
 		}
 	}

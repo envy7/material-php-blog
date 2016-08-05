@@ -15,7 +15,7 @@
 	<div class="navbar-fixed z-depth-2"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo">Blog</a>
+	      <a href="#" class="brand-logo center">Blog</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <form class="nav-search">
 	      	<div class="input-field">
@@ -24,17 +24,25 @@
 		      	<i class="material-icons">close</i>
 	      	</div>
 	      </form>
+	      <ul id='nav-mobile' class='right hide-on-med-and-down'>
 	      <?php 
 	      		require 'session.php';
 	      		if(!login()){
-					echo "<ul id='nav-mobile' class='right hide-on-med-and-down'>
+					echo "
 				        <li class='active'><a href='signin.php'>Sign In</a></li>
 				        <li><a href='signup.php'>Sign Up</a></li>
 				      </ul>";
 				}
+				else{
+					echo "
+					<li><a href='index.php'>Home</a></li>
+					<li class='active'><a href='sass.html'>Your Blogs</a></li>
+	        		<li><a href='badges.html'>Profile</a></li>
+	        		<li><a href='collapsible.html'>Contact Us</a></li>";
+				}	
 	      		
 	      ?>
-	      
+	      </ul>
 	    </div>
 	  </nav>
 	</div>
@@ -84,7 +92,7 @@
 
 				echo     "</div>
 				    <div class='card-content'>
-				      <span style='line-height: 25px' class='card-title activator grey-text text-darken-4'>".$row['title']." by <span class='blogger'>".$username."</span><i class='material-icons right'>more_vert</i></span>";
+				      <span style='line-height: 25px' class='card-title activator grey-text text-darken-4'>".$row['title']." <span style='color:#f50057'>by</span> <span class='blogger'>".$username."</span><i class='material-icons right'>more_vert</i></span>";
 				      echo "<br>";
 							for($j = 0; $j < sizeof($array); $j++){
 			     	        	echo "<a href='category.php?cat=".substr($array[$j], 1)."' class='btn waves-effect waves-light category z-depth-2' value=".$array[$j].">".$array[$j]."</a>";

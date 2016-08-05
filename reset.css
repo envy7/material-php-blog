@@ -79,10 +79,29 @@ table {
 
 .nav-search{
 	position: absolute;
-	right: 360px;
+	left: 45px;
 }
 
 .blogger {
 	color: #3f51b5;
 	font-weight: 400;
+}
+
+p.userinfo {
+	background-color: #f50057;
+	color: #fff;
+	padding: 10px;
+	margin: 5px;
+	display: inline-block;
+}
+
+h4.userinfo {
+	color: #3f51b5;
+	margin-left: 5px;
+}
+
+.fab-action {
+	top: 15px !important;
+	bottom: 15px !important;
+	position: absolute !important;
 }

@@ -1,5 +1,7 @@
 <?php 
 
+require 'session.php';
+
 
 $priviledge = "admin";
 require 'profile.php';
