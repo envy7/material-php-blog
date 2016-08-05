@@ -41,7 +41,7 @@
 <?php 
 			require 'connect.php';
 			$searchCat = $_GET['cat'];
-			$sql = "SELECT * FROM `blogs` WHERE `category` LIKE '%$searchCat%' ";
+			$sql = "SELECT * FROM `blogs` WHERE `category` LIKE '%$searchCat%' AND `status` = 'A' ";
 			$result1 = mysqli_query($db,$sql);
 			$num=mysqli_num_rows($result1);
 			echo "<h1 align = 'center' style='font-size:33px;color: #fff'>#".$searchCat."</h1>";
@@ -82,7 +82,7 @@
 			}
 
 ?>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 

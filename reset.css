@@ -76,3 +76,13 @@ table {
     padding: 5px;
     margin: 7px;
 }
+
+.nav-search{
+	position: absolute;
+	right: 360px;
+}
+
+.blogger {
+	color: #3f51b5;
+	font-weight: 400;
+}
