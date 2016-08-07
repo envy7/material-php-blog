@@ -33,7 +33,7 @@ if(isset($_GET['edit'])){
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body>
+<body style="background-image: linear-gradient(90deg, rgba(80, 196, 214, 0.9) 0%, rgba(82, 113, 209, 0.9) 100%);">
 	<div class="navbar-fixed"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
@@ -55,7 +55,7 @@ if(isset($_GET['edit'])){
 	  </nav>
 	</div>
 	<div class="row" style="margin: 20 auto;width: 70%">
-	    <form class="col s12" action = <?php  
+	    <form class="col s12 add-blog-form z-depth-2" action = <?php  
 		if(isset($_GET['edit'])){
 			$tmp = $_GET['edit'];
 			if($tmp == "Y"){

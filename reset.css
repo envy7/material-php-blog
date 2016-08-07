@@ -104,4 +104,29 @@ h4.userinfo {
 	top: 15px !important;
 	bottom: 15px !important;
 	position: absolute !important;
+	height: 55px;
+}
+
+.add-blog-form {
+	background-color: #fff;
+    padding: 20px !important;
+    border-radius: 5px;
+}
+
+.user-avatar {
+	height: 200px;
+	width: 200px;
+	border-radius: 100px;
+	display: block;
+	margin: 0 auto;
+}
+
+.users-table {
+	width: 80%;
+	padding: 30px;
+	background-color: #fff;
+}
+
+.users-table > div {
+	margin: 0 auto;
 }

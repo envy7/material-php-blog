@@ -27,7 +27,7 @@ $id = $_SESSION["id"];
 			$sql = "SELECT * FROM `blogs` WHERE `status`='R' AND `blogger_id` = '$id' ORDER BY `updated_on` DESC";
 		}
 		elseif($tmp=="All"){
-			$sql = "SELECT * FROM `blogs` ORDER BY `updated_on` DESC" ;
+			$sql = "SELECT * FROM `blogs` WHERE `blogger_id` = '$id' ORDER BY `updated_on` DESC" ;
 		}
 	}
 

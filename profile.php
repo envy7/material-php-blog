@@ -19,9 +19,18 @@
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li><a href="index.php">Home</a></li>
-	        <li class="active"><a href="sass.html">Your Blogs</a></li>
+	        <?php
+	        	if($priviledge == 'admin'){
+	        		echo "<li><a href='userpermit.php'>Users</a></li>";
+	        		echo "<li class='active'><a href='admin.php'>Panel</a></li>";
+	        	}
+	        	else{
+	        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
+	        	}
+	        ?>
 	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
+	        <li><a href="signout.php">Log Out</a></li>
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
 	        <li><a href="sass.html">Home</a></li>
@@ -212,7 +221,6 @@
 						</div>";
 				}    
 
-
 				echo    "<img class='activator' src='get_image.php?id=".$blgid."'>";
 
 				echo     "</div>
@@ -235,10 +243,17 @@
 
 		echo "<div id='modal1' class='modal'>
 			    <div class='modal-content'>
-			      <h4 class='userinfo'>".$userinfo['userName']."</h4>
-			      <p class='userinfo'>".$userinfo['fname']." ".$userinfo['lname']."</p>
-			      <p class='userinfo'>".$userinfo['email']."</p>
-			      <p class='userinfo'>".$userinfo['contact']."</p>
+			      <div class='row'>
+			      		<div class='col l6 m6 s6'>
+					      		<img class='user-avatar' src='get_image.php?avatarid=".$userinfo['Id']."'>
+					    </div>
+					    <div class='col l6 m6 s6'>
+					      		<h4 class='userinfo'>".$userinfo['userName']."</h4>
+							    <p class='userinfo'>".$userinfo['fname']." ".$userinfo['lname']."</p>
+							    <p class='userinfo'>".$userinfo['email']."</p>
+							    <p class='userinfo'>".$userinfo['contact']."</p>
+					    </div>
+			      </div>		
 			    </div>
 			    <div class='modal-footer'>
 			      <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>

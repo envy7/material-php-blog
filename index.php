@@ -35,8 +35,8 @@
 				}
 				else{
 					echo "
-					<li><a href='index.php'>Home</a></li>
-					<li class='active'><a href='sass.html'>Your Blogs</a></li>
+					<li  class='active'><a href='index.php'>Home</a></li>
+					<li><a href='home.php'>Your Blogs</a></li>
 	        		<li><a href='badges.html'>Profile</a></li>
 	        		<li><a href='collapsible.html'>Contact Us</a></li>";
 				}	
@@ -106,16 +106,20 @@
 				  </div>
 				  </div>" 	;   
 			}
+
+			if(login()){
+					echo "<div class='fixed-action-btn' style='bottom: 45px; right: 24px;'>
+						    <a class='btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4'>
+						      <i class='large material-icons'>add</i>
+						    </a>
+						  </div>";
+				}
 		
 		
 	
 	?>	
 
-	<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-	    <a class="btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4">
-	      <i class="large material-icons">add</i>
-	    </a>
-	  </div>
+	
 	<!--Import jQuery before materialize.js-->
 
       <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
