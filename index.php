@@ -11,11 +11,11 @@
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body style="background-image: linear-gradient(90deg, rgba(80, 196, 214, 0.9) 0%, rgba(82, 113, 209, 0.9) 100%);">
+<body style="background-image: url(images/index-bg.jpg);background-size: cover; background-attachment: fixed; background-repeat: no-repeat">
 	<div class="navbar-fixed z-depth-2"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo center">Blog</a>
+	      <a href="#" class="brand-logo center">Blogger</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <form class="nav-search">
 	      	<div class="input-field">
@@ -31,17 +31,44 @@
 					echo "
 				        <li class='active'><a href='signin.php'>Sign In</a></li>
 				        <li><a href='signup.php'>Sign Up</a></li>
-				      </ul>";
+				      ";
 				}
 				else{
 					echo "
 					<li  class='active'><a href='index.php'>Home</a></li>
 					<li><a href='home.php'>Your Blogs</a></li>
+	        		";
+				}
+				echo "<li><a href='contactus.php'>Contact Us</a></li>";
+
+
+				/* 
+					if(!login()){
+					echo "
+				        <li class='active'><a href='signin.php'>Sign In</a></li>
+				        <li><a href='signup.php'>Sign Up</a></li>
+				      </ul>";
+				}
+				else{
+					echo "<li class='active'><a href='index.php'>Home</a></li>";
+
+					if($priviledge == 'admin'){
+		        		echo "<li class='active'><a href='admin.php'>Panel</a></li>";
+		        	}
+		        	else{
+		        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
+		        	}
+
+					echo "
 	        		<li><a href='badges.html'>Profile</a></li>
 	        		<li><a href='collapsible.html'>Contact Us</a></li>";
 				}	
+				*/
+					
 	      		
 	      ?>
+
+
 	      </ul>
 	    </div>
 	  </nav>
@@ -67,6 +94,21 @@
 			$result = mysqli_query($db,$sql);
 			$num=mysqli_num_rows($result);
 			
+			if($num == 0){
+				echo " <div class='row'>
+				        <div class='col s12 m12 l12' style='width:50%;margin: 0 auto;float: none'>
+				          <div class='card'>
+				            <div class='card-image'>
+				              <img src='images/no-results.jpg'>
+				            </div>
+				            <div class='card-content' style='background-color: #3f51b5; color: #fff'>
+				              <p>No posts were found</p>
+				            </div>
+				          </div>
+				        </div>
+				      </div>";
+			}
+
 			$i = 0;
 			for($i; $i < $num; $i++){	
 				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -106,17 +148,6 @@
 				  </div>
 				  </div>" 	;   
 			}
-
-			if(login()){
-					echo "<div class='fixed-action-btn' style='bottom: 45px; right: 24px;'>
-						    <a class='btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4'>
-						      <i class='large material-icons'>add</i>
-						    </a>
-						  </div>";
-				}
-		
-		
-	
 	?>	
 
 	
@@ -127,7 +158,7 @@
       <script type="text/javascript">
       	$('.fixed-action-btn').click(function(){
       		window.location.href = "addblog.php";
-      	})
+      	});
       </script>
 </body>
 </html>

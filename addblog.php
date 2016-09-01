@@ -1,10 +1,18 @@
 <?php 
 require 'connect.php';
 require 'session.php';
+if($_SESSION['username'] == 'admin' && !isset($_GET['edit'])){
+	header('location:admin.php');
+}
 if(login()){
 	
 	$id = $_SESSION["id"];
 }
+
+
+
+
+
 if(isset($_GET['edit'])){
 	$tmp = $_GET['edit'];
 	if($tmp == "Y"){
@@ -33,21 +41,37 @@ if(isset($_GET['edit'])){
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body style="background-image: linear-gradient(90deg, rgba(80, 196, 214, 0.9) 0%, rgba(82, 113, 209, 0.9) 100%);">
+<body style="background-image: url(images/add-blog.jpg);background-size: cover; background-attachment: fixed; background-repeat: no-repeat">
 	<div class="navbar-fixed"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo">Blog</a>
+	      <a href="#" class="brand-logo">Blogger</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li><a href="sass.html">Home</a></li>
-	        <li class="active"><a href="sass.html">Your Blogs</a></li>
-	        <li><a href="badges.html">Profile</a></li>
-	        <li><a href="collapsible.html">Contact Us</a></li>
+	        <li><a href="index.php">Home</a></li>
+	        <?php
+	        	if($_SESSION['username'] == 'admin'){
+	        		echo "<li><a href='userpermit.php'>Users</a></li>";
+	        		echo "<li class='active'><a href='admin.php'>Blogs</a></li>";
+	        	}
+	        	else{
+	        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
+	        	}
+	        ?>
+	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
+	        <?php
+	        	if($_SESSION['username'] == 'admin'){
+	        		echo "<li><a href='contactus.php'>Messages</a></li>";
+	        	}
+	        	else{
+	        		echo "<li><a href='contactus.php'>Contact Us</a></li>";
+	        	}
+	        ?>
+	        <li><a href="signout.php">Log Out</a></li>
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
 	        <li><a href="sass.html">Home</a></li>
-	        <li><a href="badges.html">Profile</a></li>
+	        <li><a href="#modal1">Profile</a></li>
 	        <li class="active"><a href="sass.html">Your Blogs</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
 	      </ul>
@@ -113,7 +137,6 @@ if(isset($_GET['edit'])){
 
 
 <?php 
-
 	function getTags($string){
 	  preg_match_all ("/(#(.*)\s)|(#(.*)$)/U", $string, $tagarray);
 	  if(!empty($tagarray)){

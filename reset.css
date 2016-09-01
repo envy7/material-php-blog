@@ -130,3 +130,32 @@ h4.userinfo {
 .users-table > div {
 	margin: 0 auto;
 }
+
+.message-user{
+	padding: 10px;
+	background-color: #f50057;
+	color: #fff !important;
+}
+
+.cat-heading {
+	font-size: 33px;
+    color: #fff;
+    display: block;
+    margin: 0 0 20 0;
+    padding: 10px 0px;
+    background-color: #f50057;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.num_posts {
+	margin-left: 5px;
+    padding: 5px 8px;
+    background-color: #3f51b5;
+    color: #fff;
+    border-radius: 13px;
+}
+
+.brand-logo {
+	padding: 0px 30px !important;
+}

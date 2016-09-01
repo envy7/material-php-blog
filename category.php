@@ -1,3 +1,12 @@
+<?php 
+require 'connect.php';
+require 'session.php';
+
+if(!login()){
+			$_SESSION['username'] = 'Guest';
+
+}
+?>
 
 <html>
 <head>
@@ -14,18 +23,43 @@
 	<div class="navbar-fixed z-depth-2"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo">Blog</a>
+	      <a href="#" class="brand-logo">Blogger</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li><a href="?get=W">Home</a></li>
-	        <li class="active"><a href="home.php">Your Blogs</a></li>
-	        <li><a href="badges.html">Profile</a></li>
-	        <li><a href="collapsible.html">Contact Us</a></li>
+	        <li><a href="index.php">Home</a></li>
+	        <?php
+	        	if($_SESSION['username'] == 'admin'){
+	        		echo "<li><a href='userpermit.php'>Users</a></li>";
+	        		echo "<li class='active'><a href='admin.php'>Blogs</a></li>";
+	        	}
+	        	else if($_SESSION['username'] != 'Guest' && $_SESSION['username'] != 'admin'){
+	        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
+	        	}
+	        ?>
+	        <?php
+	        	if($_SESSION['username'] != 'Guest'){
+	        		echo "<li><a href='#modal1' class='modal-trigger'>Profile</a></li>";
+	        	}
+	        ?>
+	        <?php
+	        	if($_SESSION['username'] == 'admin'){
+	        		echo "<li><a href='contactus.php'>Messages</a></li>";
+	        	}
+	        	else if($_SESSION['username'] != 'Guest' && $_SESSION['username'] != 'admin'){
+	        		echo "<li><a href='contactus.php'>Contact Us</a></li>";
+	        	}
+	        ?>
+	        <?php
+	        	if($_SESSION['username'] != 'Guest') {
+	        		echo "<li><a href='signout.php'>Log Out</a></li>" ;
+	        	}
+	        ?>
+	       
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
 	        <li><a href="sass.html">Home</a></li>
-	        <li><a href="badges.html">Profile</a></li>
-	        <li class="active"><a href="home.php">Your Blogs</a></li>
+	        <li><a href="#modal1">Profile</a></li>
+	        <li class="active"><a href="sass.html">Your Blogs</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
 	      </ul>
 	    </div>
@@ -39,12 +73,12 @@
 
 
 <?php 
-			require 'connect.php';
+			
 			$searchCat = $_GET['cat'];
 			$sql = "SELECT * FROM `blogs` WHERE `category` LIKE '%$searchCat%' AND `status` = 'A' ";
 			$result1 = mysqli_query($db,$sql);
 			$num=mysqli_num_rows($result1);
-			echo "<h1 align = 'center' style='font-size:33px;color: #fff'>#".$searchCat."</h1>";
+			echo "<h1 class='cat-heading'>#".$searchCat."</h1>";
 			$i = 0;
 			for($i; $i < $num; $i++){	
 				$row = mysqli_fetch_array($result1,MYSQLI_ASSOC);
@@ -58,7 +92,7 @@
 			             <div style='margin: 0 auto;width:50%'>
 
 
-			    	<div class='card'>
+			    	<div class='card z-depth-3'>
 
 				    <div class='card-image waves-effect waves-block waves-light'>";
 				

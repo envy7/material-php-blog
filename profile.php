@@ -11,25 +11,32 @@
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body style="background-image: linear-gradient(90deg, rgba(80, 196, 214, 0.9) 0%, rgba(82, 113, 209, 0.9) 100%);">
+<body style="background-image: url(images/profile-bg.jpg);background-size: cover; background-attachment: fixed; background-repeat: no-repeat">
 	<div class="navbar-fixed z-depth-2"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo">Blog</a>
+	      <a href="#" class="brand-logo">Blogger</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li><a href="index.php">Home</a></li>
 	        <?php
 	        	if($priviledge == 'admin'){
 	        		echo "<li><a href='userpermit.php'>Users</a></li>";
-	        		echo "<li class='active'><a href='admin.php'>Panel</a></li>";
+	        		echo "<li class='active'><a href='admin.php'>Blogs</a></li>";
 	        	}
 	        	else{
 	        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
 	        	}
 	        ?>
 	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
-	        <li><a href="collapsible.html">Contact Us</a></li>
+	        <?php
+	        	if($priviledge == 'admin'){
+	        		echo "<li><a href='contactus.php'>Messages</a></li>";
+	        	}
+	        	else{
+	        		echo "<li><a href='contactus.php'>Contact Us</a></li>";
+	        	}
+	        ?>
 	        <li><a href="signout.php">Log Out</a></li>
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
@@ -116,6 +123,11 @@
 		$userinforesult = mysqli_query($db,$userdetailsql);
 		$userinfo = mysqli_fetch_array($userinforesult,MYSQLI_ASSOC);
 
+		$num_all = $GLOBALS['num_all'];
+		$num_approved = $GLOBALS['num_approved'];
+		$num_waiting = $GLOBALS['num_waiting'];
+		$num_rejected = $GLOBALS['num_rejected'];
+
 		$func = "active";
 
 		echo "<div class='row'>	
@@ -125,34 +137,55 @@
 	    if($tmp == "All"){
 	    	echo " class = 'active'";
 	    }
-	    echo " id='all' href='#test1'>All</a></li>";
+	    echo " id='all' href='#test1'><span>All</span><span class='num_posts'>".$num_all[0]."</span></a></li>";
 	    echo	        "<li class='tab col s3'><a"; 
 		if($tmp == "A"){
 	    	echo " class = 'active'";
 	    }
 
-	    echo " id='approved' href='?get=A'>Approved</a></li>";
+	    echo " id='approved' href='?get=A'><span>Approved</span><span class='num_posts'>".$num_approved[0]."</span></a></li>";
 	    echo	        "<li class='tab col s3'><a";
 		if($tmp == "W"){
 	    	echo " class = 'active'";
 	    }
-	    echo" id='waiting' href='?get=W'>Waiting</a></li>";
+	    echo" id='waiting' href='?get=W'><span>Waiting</span><span class='num_posts'>".$num_waiting[0]."</span></a></li>";
 	    echo	        "<li class='tab col s3'><a";
 		if($tmp == "R"){
 	    	echo " class = 'active'";
 	    }
-	    echo" id='rejected' href='?get=R'>Rejected</a></li>";
+	    echo" id='rejected' href='?get=R'><span>Rejected</span><span class='num_posts'>".$num_rejected[0]."</span></a></li>";
 		echo	   '</ul>
 			    </div>
 			</div>
 			
 			<h1 align = "center" ></h1>';
 
+	    
+
+		
+
 
 		$priviledge = $GLOBALS['priviledge'];
 		function display_blogs($priviledge){
 			$num = $GLOBALS['num_query'];
 			$result = $GLOBALS['result'];
+
+			if($num == 0){
+				echo " <div class='row'>
+				        <div class='col s12 m12 l12' style='width:50%;margin: 0 auto;float: none'>
+				          <div class='card'>
+				            <div class='card-image'>
+				              <img src='images/no-results.jpg'>
+				            </div>
+				            <div class='card-content' style='background-color: #3f51b5; color: #fff'>
+				              <p>No posts were found</p>
+				            </div>
+				          </div>
+				        </div>
+				      </div>";
+			}
+			
+
 			$i = 0;
 			for($i; $i < $num; $i++){	
 				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -164,7 +197,7 @@
 			             <div style='margin: 0 auto;width:50%'>
 
 
-			    	<div class='card'>
+			    	<div class='card z-depth-3'>
 
 				    <div class='card-image waves-effect waves-block waves-light'>";
 				if($priviledge == "admin" && $_SESSION['username']=="admin"){
@@ -172,7 +205,7 @@
 						$var2 = $GLOBALS['tmp'];
 						echo "<div class='fixed-action-btn horizontal fab-action'>
 						    <a class='btn-floating btn-large indigo'>
-						      <i class='large material-icons'>brush</i>
+						      <i class='large material-icons'>expand_more</i>
 						    </a>
 						    <ul>
 						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
@@ -185,7 +218,7 @@
 						$var2 = $GLOBALS['tmp'];
 						echo "<div class='fixed-action-btn horizontal fab-action'>
 						    <a class='btn-floating btn-large indigo'>
-						      <i class='large material-icons'>brush</i>
+						      <i class='large material-icons'>expand_more</i>
 						    </a>
 						    <ul>
 						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
@@ -198,7 +231,7 @@
 						$var2 = $GLOBALS['tmp'];
 						echo "<div class='fixed-action-btn horizontal fab-action'>
 						    <a class='btn-floating btn-large indigo'>
-						      <i class='large material-icons'>brush</i>
+						      <i class='large material-icons'>expand_more</i>
 						    </a>
 						    <ul>
 						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
@@ -212,7 +245,7 @@
 					$var2 = $GLOBALS['tmp'];
 					echo "<div class='fixed-action-btn horizontal fab-action'>
 						    <a class='btn-floating btn-large indigo'>
-						      <i class='large material-icons'>brush</i>
+						      <i class='large material-icons'>expand_more</i>
 						    </a>
 						    <ul>
 						      <li><a href = '?get=".$var2."&chd=".$row['blog_id']."&fun=D' class='btn-floating red'><i class='material-icons'>delete</i></a></li>
@@ -258,18 +291,25 @@
 			    <div class='modal-footer'>
 			      <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Close</a>
 			    </div>
-			  </div>"
+			  </div>";
 		
+		if($priviledge != 'admin'){
+
+			if($userinfo['status'] == 'Y'){
+				echo "<div class='fixed-action-btn' style='bottom: 45px; right: 24px;'>
+					    <a class='btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4'>
+					      <i class='large material-icons'>add</i>
+					    </a>
+					  </div>";
+			}
+
+		}
 	
 	?>	
 
 	
 
-	<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-	    <a class="btn-floating btn-large waves-effect waves-light pink accent-3  z-depth-4">
-	      <i class="large material-icons">add</i>
-	    </a>
-	  </div>
+	
 	<!--Import jQuery before materialize.js-->
 
       <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>

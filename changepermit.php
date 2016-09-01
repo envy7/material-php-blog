@@ -5,15 +5,15 @@
 		{
 			$idforpermitchange = $_GET['id'];
 			$statusafterpermitchange = $_GET['status'];
-			// echo $idforpermitchange;
-			// echo $statusafterpermitchange;
+			echo $idforpermitchange;
+			echo $statusafterpermitchange;
 
 			if($statusafterpermitchange == 'true'){
-				// echo "inside true";
+				echo "inside true";
 				$sql1 = "UPDATE `userdetails` SET `status`='Y' WHERE `Id` = '$idforpermitchange'";
 			}
 			else{
-				// echo "inside false";
+				echo "inside false";
 				$sql1 = "UPDATE `userdetails` SET `status`='N' WHERE `Id` = '$idforpermitchange'";
 			}
 

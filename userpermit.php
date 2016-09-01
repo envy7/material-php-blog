@@ -15,12 +15,12 @@
 	<div class="navbar-fixed z-depth-2"> 
 		<nav style="background-color: #3f51b5">
 	    <div class="nav-wrapper">
-	      <a href="#" class="brand-logo">Blog</a>
+	      <a href="#" class="brand-logo">Blogger</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li><a href="index.php">Home</a></li>
-	        <li><a href='edituser.php'>Users</a></li>
-	        <li class='active'><a href='admin.php'>Panel</a></li>
+	        <li  class='active'><a href='userpermit.php'>Users</a></li>
+	        <li><a href='admin.php'>Blogs</a></li>
 	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
 	        <li><a href="collapsible.html">Contact Us</a></li>
 	        <li><a href="signout.php">Log Out</a></li>
@@ -53,7 +53,7 @@
 
 
 
-		echo"   <div class='row users-table z-depth-2'><form><table class='bordered striped centered'>
+		echo"   <div class='row users-table z-depth-2'><form><table class='centered'>
 			        <thead>
 			          <tr>
 			              <th data-field='id'>UserId</th>
@@ -77,7 +77,7 @@
 
 		    echo    "<td><div class='switch'>
 					    <label>
-					      inactive";
+					      ";
 			if($row['status'] == 'N'){
 				echo "<input type='checkbox' onchange='changePermission(this.checked, ".$row['Id'].")'>";
 			}		      
@@ -85,7 +85,7 @@
 				echo "<input type='checkbox' checked='checked' onchange='changePermission(this.checked, ".$row['Id'].")'>";
 			}
 			echo		"<span class='lever'></span>
-					      active
+					      
 					    </label>
 					</div></td>";
 		    echo    "</tr>";
@@ -173,7 +173,7 @@
 					url : 'changepermit.php',
 					data : dataString,
 					success : function(data){
-						alert(data);
+						console.log(data);
 					}
 				});
 		    

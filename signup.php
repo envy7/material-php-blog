@@ -23,12 +23,12 @@ if(login()){
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body style="background-image: linear-gradient(90deg, rgba(80, 196, 214, 0.9) 0%, rgba(82, 113, 209, 0.9) 100%);">
+<body style="background-image: url(images/sign-in.jpg);background-size: cover; background-attachment: fixed; background-repeat: no-repeat">
 	
 	<div class="navbar-fixed"> 
 			<nav style="background-color: #3f51b5">
 		    <div class="nav-wrapper">
-		      <a href="#" class="brand-logo">Blog</a>
+		      <a href="#" class="brand-logo">Blogger</a>
 		      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 		      <ul id="nav-mobile" class="right hide-on-med-and-down">
 		        <li><a href="index.php">Home</a></li>
@@ -92,46 +92,7 @@ if(login()){
 		  </div>
 	    </form>
 	  </div>
-			<!--<form action = "signup.php" method = "POST" enctype = "utf-8"> 
-				<p class="fieldset">
-					<label for="signup-username">First name</label>
-
-					<input class="image-replace cd-username" type = "text" name = "fname" placeholder="First Name" maxlength = 30 required>
-				</p>
-
-				<p class="fieldset">
-					<label for="signup-username">Last name</label>
-
-					<input class="image-replace cd-username" type = "text" name = "lname" placeholder="Last Name" maxlength = 30 required>
-				</p>
-				<p class="fieldset">
-					<label for="signup-username">Email Address </label>
-
-					<input class="image-replace cd-username" type = "email" name = "emailaddr" placeholder="Email Address" required> 
-				</p>
-				<p class="fieldset">
-					<label for="signup-username">Username</label>
-
-					<input class="image-replace cd-username" type = "text" name = "username" placeholder="User Name" maxlength = 30 required>
-				</p>
-
-				<p class="fieldset">
-					<label for="signup-username">Password</label>
-
-					<input class="image-replace cd-username" type = "password" name = "password" placeholder="Password" required> 
-				</p>
-				<p class="fieldset">
-					<label for="signup-username">Contact</label>
-
-					<input class="image-replace cd-username" type = "number" name = "contact" placeholder="Contact Number"> 
-				</p>
-				<p class="fieldset">
-
-					<input class="full-width has-padding" type="submit" value="Create account" name="cre">
-				</p>
-
-
-			</form>-->
+			
 			<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 		 	<script type="text/javascript" src="js/materialize.min.js"></script>
 		 	<script type="text/javascript">
