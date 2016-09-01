@@ -83,7 +83,7 @@ if (isset($_POST['login'])){
 
 		else{
 			$u = $_POST['username'];
-			$p = $_POST['password'];
+			$p = md5($_POST['password']);
 
 			$sql = "SELECT `Id`,`userName`,`password` FROM `userdetails` WHERE `username`= '$u' and `password`= '$p'";
 			$result = mysqli_query($db,$sql);

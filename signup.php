@@ -150,7 +150,7 @@ if(isset($_POST["cre"])){
 		$f = $_POST["fname"];
 		$l = $_POST["lname"];
 		$e = $_POST["emailaddr"];
-		$p = $_POST["password"];
+		$p = md5($_POST["password"]);
 
 		$allowed = array('gif','png' ,'jpg');
 			$filename = $_FILES['file']['name'];
