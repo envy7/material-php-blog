@@ -70,25 +70,27 @@
 		$i = 0;
 		for($i; $i < $num_users; $i++){
 			$row = mysqli_fetch_array($alluserslist ,MYSQLI_ASSOC);
-			echo "<tr>
+			if($row['userName'] != 'admin'){
+				echo "<tr>
 		            <td id='user_id'>".$row['Id']."</td>
 		            <td>".$row['userName']."</td>
 		            <td>".$row['email']."</td>";
 
-		    echo    "<td><div class='switch'>
-					    <label>
-					      ";
-			if($row['status'] == 'N'){
-				echo "<input type='checkbox' onchange='changePermission(this.checked, ".$row['Id'].")'>";
-			}		      
-			else{
-				echo "<input type='checkbox' checked='checked' onchange='changePermission(this.checked, ".$row['Id'].")'>";
+			    echo    "<td><div class='switch'>
+						    <label>
+						      ";
+				if($row['status'] == 'N'){
+					echo "<input type='checkbox' onchange='changePermission(this.checked, ".$row['Id'].")'>";
+				}		      
+				else{
+					echo "<input type='checkbox' checked='checked' onchange='changePermission(this.checked, ".$row['Id'].")'>";
+				}
+				echo		"<span class='lever'></span>
+						      
+						    </label>
+						</div></td>";
+			    echo    "</tr>";
 			}
-			echo		"<span class='lever'></span>
-					      
-					    </label>
-					</div></td>";
-		    echo    "</tr>";
 		}	
 
 		echo 		"</tbody></form>

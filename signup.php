@@ -169,7 +169,11 @@ if(isset($_POST["cre"])){
 			$sql = "INSERT INTO `userdetails`(`userName`,`fname`,`lname`,`password`,`email`,`contact`, `profile_pic`) VALUES ('$u','$f','$l','$p','$e','$c', '$file')";
 			if(mysqli_query($db,$sql)){
 				// echo "<script>alert('Your blog account is created.');</script>";
-				header('location:home.php');
+				// $sql2 = "SELECT `Id`,`userName`,`password` FROM `userdetails` WHERE `username`= '$u' and `password`= '$p'";
+				// $result2 = mysqli_query($db,$sql);
+				// $num2=mysqli_num_rows($result);
+				// $row2=mysqli_fetch_array($result,MYSQLI_ASSOC);
+				header('location:signin.php');
 			}
 			else
 			{

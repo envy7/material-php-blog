@@ -98,6 +98,7 @@ if (isset($_POST['login'])){
 				$_SESSION['username']= $u;
 				$_SESSION['id'] = $row['Id'];
 				$_SESSION['login-with-blog'] = 1;
+				$_SESSION['status'] = $row['status'];
 
 				if ($rm == "on"){
 					setcookie("	username",$_POST['username'],time()+60*60*24);

@@ -5,8 +5,14 @@ if($_SESSION['username'] == 'admin' && !isset($_GET['edit'])){
 	header('location:admin.php');
 }
 if(login()){
+	/*if($_SESSION['status'] == "N"){
+		echo $_SESSION['status'];
+		header('location:home.php');
+	}*/
+	//else{
+		$id = $_SESSION["id"];
+	//}
 	
-	$id = $_SESSION["id"];
 }
 
 

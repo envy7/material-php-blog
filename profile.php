@@ -24,84 +24,84 @@
 	        		echo "<li><a href='userpermit.php'>Users</a></li>";
 	        		echo "<li class='active'><a href='admin.php'>Blogs</a></li>";
 	        	}
-	        	else{
-	        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
-	        	}
-	        ?>
-	        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
-	        <?php
-	        	if($priviledge == 'admin'){
-	        		echo "<li><a href='contactus.php'>Messages</a></li>";
-	        	}
-	        	else{
-	        		echo "<li><a href='contactus.php'>Contact Us</a></li>";
-	        	}
-	        ?>
-	        <li><a href="signout.php">Log Out</a></li>
-	      </ul>
-	      <ul class="side-nav" id="mobile-demo">
-	        <li><a href="sass.html">Home</a></li>
-	        <li><a href="#modal1">Profile</a></li>
-	        <li class="active"><a href="sass.html">Your Blogs</a></li>
-	        <li><a href="collapsible.html">Contact Us</a></li>
-	      </ul>
-	    </div>
-	  </nav>
-	</div>
+        	else{
+        		echo "<li class='active'><a href='home.php'>Your Blogs</a></li>";
+        	}
+        ?>
+        <li><a href="#modal1" class="modal-trigger">Profile</a></li>
+        <?php
+        	if($priviledge == 'admin'){
+        		echo "<li><a href='contactus.php'>Messages</a></li>";
+        	}
+        	else{
+        		echo "<li><a href='contactus.php'>Contact Us</a></li>";
+        	}
+        ?>
+        <li><a href="signout.php">Log Out</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="sass.html">Home</a></li>
+        <li><a href="#modal1">Profile</a></li>
+        <li class="active"><a href="sass.html">Your Blogs</a></li>
+        <li><a href="collapsible.html">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
 
+
+<?php 	
+
+	require 'connect.php';
+
+	// retrieve user info
 	
-	<?php 	
 
-		require 'connect.php';
 
-		// retrieve user info
+	if(isset($_GET['chd']) && isset($_GET['fun'])){
+		$var = $_GET['chd'];
+		$var1 = $_GET['get'];
+		$var3 = $_GET['fun'];
 		
-
-
-		if(isset($_GET['chd']) && isset($_GET['fun'])){
-			$var = $_GET['chd'];
-			$var1 = $_GET['get'];
-			$var3 = $_GET['fun'];
-			
-			//echo $var1;
-			if($var3=="D"){
-				$sql = "DELETE FROM `blogs` WHERE `blog_id` = '$var'";
-				$sql1 = "DELETE FROM `blog_detail` WHERE `blog_id` = '$var'";
-				$db = $GLOBALS['db'];
-				if(mysqli_query($db,$sql1) && mysqli_query($db,$sql)){
-					echo "query running";
-					header('location:'."?get=".$var1);
-				}
-				else{
-					echo "<script>alert('There was some error');</script>";
-					header('location:'."?get=".$var1);
-
-				}
+		//echo $var1;
+		if($var3=="D"){
+			$sql = "DELETE FROM `blogs` WHERE `blog_id` = '$var'";
+			$sql1 = "DELETE FROM `blog_detail` WHERE `blog_id` = '$var'";
+			$db = $GLOBALS['db'];
+			if(mysqli_query($db,$sql1) && mysqli_query($db,$sql)){
+				echo "query running";
+				header('location:'."?get=".$var1);
 			}
-			elseif($var3=="A"){
-				$sql = "UPDATE `blogs` SET `status` = 'A' WHERE `blog_id` = '$var'";
-				$db = $GLOBALS['db'];
+			else{
+				echo "<script>alert('There was some error');</script>";
+				header('location:'."?get=".$var1);
 
-				if(mysqli_query($db,$sql)){
-					echo "query running";
-					header('location:'."?get=".$var1);
-				}
-				else{
-					echo "<script>alert('There was some error');</script>";
-					header('location:'."?get=".$var1);
-
-				}
 			}
-			elseif($var3=="R"){
-				$sql = "UPDATE `blogs` SET `status` = 'R' WHERE `blog_id` = '$var'";
-				$db = $GLOBALS['db'];
+		}
+		elseif($var3=="A"){
+			$sql = "UPDATE `blogs` SET `status` = 'A' WHERE `blog_id` = '$var'";
+			$db = $GLOBALS['db'];
 
-				if(mysqli_query($db,$sql)){
-					echo "query running";
-					header('location:'."?get=".$var1);
-				}
-				else{
-					echo "<script>alert('There was some error');</script>";
+			if(mysqli_query($db,$sql)){
+				echo "query running";
+				header('location:'."?get=".$var1);
+			}
+			else{
+				echo "<script>alert('There was some error');</script>";
+				header('location:'."?get=".$var1);
+
+			}
+		}
+		elseif($var3=="R"){
+			$sql = "UPDATE `blogs` SET `status` = 'R' WHERE `blog_id` = '$var'";
+			$db = $GLOBALS['db'];
+
+			if(mysqli_query($db,$sql)){
+				echo "query running";
+				header('location:'."?get=".$var1);
+			}
+			else{
+				echo "<script>alert('There was some error');</script>";
 					header('location:'."?get=".$var1);
 
 				}
